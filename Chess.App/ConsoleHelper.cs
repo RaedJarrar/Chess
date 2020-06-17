@@ -22,6 +22,7 @@ namespace Chess
         /// <param name="options">A list of options to display to the user alongside their actions.</param>
         /// <returns>The result of the action selected or null if Escape was pressed.</returns>
         public static TResult Menu<TResult>(string title, string noOptionsText, bool canCancel, params (string, Func<TResult>)[] options)
+            where TResult : class
         {
             if (options.Length <= 0)
             {
@@ -123,7 +124,7 @@ namespace Chess
 
             TResult actionResult = options[currentSelection].Item2.Invoke();
 
-            if (actionResult == default)
+            if (actionResult == default(TResult))
             {
                 return ConsoleHelper.Menu(title, noOptionsText, canCancel, options);
             }
